@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-p1',
-  template: `
-    <p>
-      p1 works!
-    </p>
-  `,
-  styles: []
+  templateUrl: './p1.component.html',
+  styleUrls: ['./p1.component.scss']
 })
 export class P1Component implements OnInit {
 
