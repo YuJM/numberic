@@ -1,25 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { merge, Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { scan, share } from 'rxjs/operators';
-
-export enum MathItemType {
-  Init = 0,
-  Number = 1,
-  Operator = 2,
-}
-
-enum Operator {
-  puls,
-  minus,
-  divid,
-  mult,
-  mod
-}
-
-export interface IMathItem {
-  type: MathItemType;
-  value?: any;
-}
+import { MathItemType } from '../../numberic.enum';
+import { IMathItem } from '../../numberic.interface';
 
 @Component({
   selector: 'app-p1',
@@ -27,28 +10,30 @@ export interface IMathItem {
   styleUrls: ['./p1.component.scss']
 })
 export class P1Component implements OnInit {
-  mathArray = [];
-  math$: Observable<IMathItem[]>;
+  math$: IMathItem[];
   mathType = MathItemType;
   addMatItem$ = new Subject<IMathItem>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.math$ = this.addMatItem$.pipe(
-      scan<IMathItem>((acc, c) => {
-        if (c.type === MathItemType.Init) {
-          return [];
-        }
-        acc.push(c);
-        return acc;
-      }, []),
-      share()
-    );
+    this.addMatItem$
+        .pipe(
+          scan<IMathItem>((acc, c) => {
+            if (c.type === MathItemType.Init) {
+              return [];
+            }
+            acc.push(c);
+            return acc;
+          }, []),
+          share()
+        )
+        .subscribe(data => {
+          this.math$ = data;
+        });
   }
 
   addOperator(addOk?: boolean) {
-
     // this.mathArray.push({
     //   type: MathItemType.Operator,
     //   value: this.getRandomInt(4)
@@ -60,7 +45,6 @@ export class P1Component implements OnInit {
   }
 
   addNumber() {
-
     // this.mathArray.push({
     //   type: MathItemType.Number,
     //   value: this.getRandomInt(9)
@@ -76,8 +60,11 @@ export class P1Component implements OnInit {
     // this.mathArray = [];
   }
 
+  onCheckDialog() {
+    console.log('maht', this.math$);
+  }
+
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
-
 }

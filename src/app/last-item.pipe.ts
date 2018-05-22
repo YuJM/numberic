@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IMathItem, MathItemType } from './views/p1/p1.component';
+import { MathItemType } from './numberic.enum';
+import { IMathItem} from './numberic.interface';
 
 @Pipe({
   name: 'lastItem',
