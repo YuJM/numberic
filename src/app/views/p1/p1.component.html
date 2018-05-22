@@ -1,7 +1,9 @@
-<div class="container d-flex flex-column">
-  <div class="d-flex flex-row justify-content-center">수식!</div>
-  <div class="flex-grow-1 row h-100">
-    <div class="col-6 h-50">연산자선택</div>
-    <div class="col-6 h-50">숫자선택</div>
+<div class="container-fluid p-5">
+  <h1 class="text-secondary text-center m-2 mat-board"><span *ngFor="let item of mathArray"
+                                                             [ngClass]="{'text-primary': item.type === 1, 'text-success': item.type === 0}">
+  {{item.value}}</span></h1>
+  <div class="flex-grow-1 row">
+    <mat-card class="col-6  text-center hover text-primary p-5" (click)="addOperator()"><h2>연산자</h2></mat-card>
+    <mat-card class="col-6 text-center hover text-success p-5" (click)="addNumber()"><h2>숫자</h2></mat-card>
   </div>
 </div>
