@@ -1,15 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 //@import "style/ng-ant.css";
-html,body {
+html, body {
   height: 100%;
 }
+
 @import "~bootstrap/scss/bootstrap";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "style/css/fontawesome-all.min.css";
 @import "style/var";
 
-
 .hover {
   user-select: none;
   cursor: pointer;
+}
+
+.math-item-card {
+  @extend .shadow-sm;
+  background-color: #fff;
+  user-select: none;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  &.operator {
+    @extend .bg-success;
+  }
+  &.number {
+    @extend .bg-primary;
+  }
 }

@@ -1,9 +1,20 @@
 <div class="container-fluid p-5">
-  <h1 class="text-secondary text-center m-2 mat-board"><span *ngFor="let item of mathArray"
-                                                             [ngClass]="{'text-primary': item.type === 1, 'text-success': item.type === 0}">
-  {{item.value}}</span></h1>
-  <div class="flex-grow-1 row">
-    <mat-card class="col-6  text-center hover text-primary p-5" (click)="addOperator()"><h2>연산자</h2></mat-card>
-    <mat-card class="col-6 text-center hover text-success p-5" (click)="addNumber()"><h2>숫자</h2></mat-card>
+  <h1 class="text-secondary text-center m-2 mat-board"><span class="math-item-card" *ngFor="let item of math$| async"
+                                                             [ngClass]="{'operator': item.type === mathType.Operator, 'number': item.type === mathType.Number}"> {{item.value}}</span>
+  </h1>
+  <div class="row d-flex">
+    <mat-card class="col-6 text-center hover text-primary p-5" (click)="addNumber()"><h2>숫자</h2></mat-card>
+    <mat-card class="col-6  text-center hover text-success p-5" *ngIf="(addMatItem$|async)?.type
+      === mathType.Number" (click)="addOperator()"><h2>연산자</h2></mat-card>
+  </div>
+
+  <div class="d-flex justify-content-between m-5">
+    <button class="w-25 h-25" mat-raised-button color="primary"
+            (click)="reset()">reset
+    </button>
+    <button class="w-25 h-25" mat-raised-button color="primary"
+            [disabled]=" (math$|async)?.length < 3 || (addMatItem$|async)?.type
+      === mathType.Operator">확인
+    </button>
   </div>
 </div>

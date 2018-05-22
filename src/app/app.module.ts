@@ -10,6 +10,7 @@ import { P1Component } from './views/p1/p1.component';
 import { StartViewComponent } from './views/start-view/start-view.component';
 
 import { ListToStrPipe } from './list-to-str.pipe';
+import { LastItemPipe } from './last-item.pipe';
 
 const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialogModule, MatTooltipModule];
 
@@ -18,7 +19,8 @@ const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialog
     AppComponent,
     StartViewComponent,
     P1Component,
-    ListToStrPipe
+    ListToStrPipe,
+    LastItemPipe
   ],
   imports: [
     BrowserAnimationsModule,
