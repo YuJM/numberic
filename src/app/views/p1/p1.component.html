@@ -1,5 +1,5 @@
 <div class="container-fluid p-5">
-  <h1 class="text-secondary text-center m-2 mat-board"><span class="math-item-card" *ngFor="let item of math$"
+  <h1 class="text-secondary text-center m-2 mat-board"><span class="math-item-card" *ngFor="let item of math.result"
                                                              [ngClass]="{'operator': item.type === mathType.Operator, 'number': item.type === mathType.Number}"> {{item.value}}</span>
   </h1>
   <div class="row d-flex">
@@ -13,7 +13,7 @@
             (click)="reset()">reset
     </button>
     <button class="w-25 h-25" mat-raised-button color="primary"
-            [disabled]=" (math$)?.length < 3 || (addMatItem$|async)?.type
+            [disabled]=" (math.result)?.length < 3 || (addMatItem$|async)?.type
       === mathType.Operator" (click)="onCheckDialog()">확인
     </button>
   </div>

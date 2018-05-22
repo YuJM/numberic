@@ -3,13 +3,8 @@ import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
 import { filter, scan, share } from 'rxjs/operators';
 import { MathType, OperatorType } from '../../numberic.enum';
-import { IMathItem } from '../../numberic.interface';
+import { IMathItem, MathMeta } from '../../numberic.interface';
 import { ResultDialogComponent } from '../result-dialog/result-dialog.component';
-
-interface MathMeta {
-  mata: {ka: any[]};
-  result: IMathItem[];
-}
 
 @Component({
   selector: 'app-p1',
@@ -17,7 +12,11 @@ interface MathMeta {
   styleUrls: ['./p1.component.scss']
 })
 export class P1Component implements OnInit {
-  math$: IMathItem[];
+  math: MathMeta = {
+    priorityIndex: [],
+    matrix: [],
+    result: []
+  };
   mathType = MathType;
   addMatItem$ = new Subject<IMathItem>();
 
@@ -25,38 +24,42 @@ export class P1Component implements OnInit {
 
   ngOnInit() {
 
-    const init: MathMeta = {
-      mata: {ka: []},
-      result: []
-    };
     this.addMatItem$
         .pipe(
           scan<IMathItem, MathMeta>((acc, c) => {
             const result = acc.result;
             const beforeIndex = result.length - 1;
+            let pushValue = 0;
             if (c.type === MathType.Init) {
               return {
-                mata: {ka: []},
+                priorityIndex: [],
+                matrix: [],
                 result: []
               };
             } else if (c.type === MathType.Operator && c.value <= OperatorType.mod) {
-              acc.mata.ka.push(result.length);
-            } else if (result.length && result[beforeIndex].type === MathType.Number && c.type === MathType.Number) {
-              result[beforeIndex].value = `${result[beforeIndex].value}${c.value}`;
-              return acc;
+              acc.priorityIndex.push(result.length);
+              acc.matrix[beforeIndex]++;
+              pushValue = 1;
+            } else if (c.type === MathType.Number) {
+              if (result.length && result[beforeIndex].type === MathType.Number) {
+                result[beforeIndex].value = `${result[beforeIndex].value}${c.value}`;
+                return acc;
+              }
+
             }
+            acc.matrix.push(pushValue);
             result.push(c);
             acc.result = result;
             return acc;
           }, {
-            mata: {ka: []},
+            priorityIndex: [],
+            matrix: [],
             result: []
           }),
           share()
         )
         .subscribe(data => {
-          console.log('data', data);
-          this.math$ = data.result;
+          this.math = data;
         });
   }
 
@@ -67,7 +70,7 @@ export class P1Component implements OnInit {
     // });
     this.addMatItem$.next({
       type: MathType.Operator,
-      value: this.getRandomInt(4)
+      value: this.getRandomInt(9) % 5
     });
   }
 
@@ -91,12 +94,11 @@ export class P1Component implements OnInit {
   }
 
   onCheckDialog() {
-    console.log('math', this.math$);
-
+    console.log('결과 ', this.math);
     const ref = this.dialog.open(ResultDialogComponent, {
       width: '90%',
       height: '80%',
-      data: {mathArray: this.math$}
+      data: {mathArray: this.math}
     });
     ref.afterClosed()
        .pipe(filter(x => !!x))

@@ -7,7 +7,7 @@ export enum MathType {
 export enum OperatorType {
   divide,
   multi,
-  mod,
+  mod,  // 여기서 부터
   puls,
   minus
 }
