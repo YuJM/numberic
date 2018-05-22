@@ -1,6 +1,6 @@
-import { MathItemType } from './numberic.enum';
+import { MathType } from './numberic.enum';
 
 export interface IMathItem {
-  type: MathItemType;
-  value?: any;
+  type: MathType;
+  value: any;
 }
