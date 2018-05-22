@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
-import { scan, share } from 'rxjs/operators';
+import { filter, scan, share } from 'rxjs/operators';
 import { MathItemType } from '../../numberic.enum';
 import { IMathItem } from '../../numberic.interface';
+import { ResultDialogComponent } from '../result-dialog/result-dialog.component';
 
 @Component({
   selector: 'app-p1',
@@ -14,7 +16,7 @@ export class P1Component implements OnInit {
   mathType = MathItemType;
   addMatItem$ = new Subject<IMathItem>();
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
     this.addMatItem$
@@ -62,6 +64,16 @@ export class P1Component implements OnInit {
 
   onCheckDialog() {
     console.log('maht', this.math$);
+
+    const ref = this.dialog.open(ResultDialogComponent, {
+      width: '90%',
+      height: '80%',
+      data: {mathArray: this.math$}});
+    ref.afterClosed()
+       .pipe(filter(x => !!x))
+       .subscribe((data) => {
+         console.log('닫을 때 데이터', data);
+       });
   }
 
   getRandomInt(max) {

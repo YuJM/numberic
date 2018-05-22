@@ -11,6 +11,7 @@ import { StartViewComponent } from './views/start-view/start-view.component';
 
 import { ListToStrPipe } from './list-to-str.pipe';
 import { LastItemPipe } from './last-item.pipe';
+import { ResultDialogComponent } from './views/result-dialog/result-dialog.component';
 
 const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialogModule, MatTooltipModule];
 
@@ -20,7 +21,8 @@ const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialog
     StartViewComponent,
     P1Component,
     ListToStrPipe,
-    LastItemPipe
+    LastItemPipe,
+    ResultDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -29,7 +31,8 @@ const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialog
     materialModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ResultDialogComponent]
 })
 export class AppModule {
 }
