@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
-import { filter, scan, share } from 'rxjs/operators';
+import { scan, share } from 'rxjs/operators';
 import { MathType, OperatorType } from '../../numberic.enum';
 import { IMathItem, MathMeta } from '../../numberic.interface';
-import { ResultDialogComponent } from '../result-dialog/result-dialog.component';
 
 @Component({
   selector: 'app-p1',
@@ -29,25 +28,28 @@ export class P1Component implements OnInit {
           scan<IMathItem, MathMeta>((acc, c) => {
             const result = acc.result;
             const beforeIndex = result.length - 1;
-            let pushValue = 0;
+
             if (c.type === MathType.Init) {
               return {
                 priorityIndex: [],
                 matrix: [],
                 result: []
               };
-            } else if (c.type === MathType.Operator && c.value <= OperatorType.mod) {
-              acc.priorityIndex.push(result.length);
-              acc.matrix[beforeIndex]++;
-              pushValue = 1;
+            } else if (c.type === MathType.Operator) {
+              if (c.value <= OperatorType.mod) {
+                acc.priorityIndex.push(result.length);
+                acc.matrix[beforeIndex]++;
+                // acc.matrix.push(1);
+              }
+              acc.matrix.push(0);
+
             } else if (c.type === MathType.Number) {
               if (result.length && result[beforeIndex].type === MathType.Number) {
-                result[beforeIndex].value = `${result[beforeIndex].value}${c.value}`;
+                result[beforeIndex].value = parseInt(`${result[beforeIndex].value}${c.value}`, 10);
                 return acc;
               }
-
+              acc.matrix.push(acc.matrix[beforeIndex - 1] || 0);
             }
-            acc.matrix.push(pushValue);
             result.push(c);
             acc.result = result;
             return acc;
@@ -81,7 +83,7 @@ export class P1Component implements OnInit {
     // });
     this.addMatItem$.next({
       type: MathType.Number,
-      value: `${this.getRandomInt(9)}`
+      value: this.getRandomInt(9)
     });
   }
 
@@ -95,16 +97,46 @@ export class P1Component implements OnInit {
 
   onCheckDialog() {
     console.log('결과 ', this.math);
-    const ref = this.dialog.open(ResultDialogComponent, {
-      width: '90%',
-      height: '80%',
-      data: {mathArray: this.math}
-    });
-    ref.afterClosed()
-       .pipe(filter(x => !!x))
-       .subscribe((data) => {
-         console.log('닫을 때 데이터', data);
-       });
+    // const ref = this.dialog.open(ResultDialogComponent, {
+    //   width: '90%',
+    //   height: '80%',
+    //   data: {mathArray: this.math}
+    // });
+    // ref.afterClosed()
+    //    .pipe(filter(x => !!x))
+    //    .subscribe((data) => {
+    //      console.log('닫을 때 데이터', data);
+    //    });
+  }
+
+  calc(mathMeta: MathMeta) {
+    const fomula = mathMeta.result;
+    const bag = [];
+
+/*    fomula.forEach((item) => {
+      if (item.type === MathType.Number) {
+        bag.push(item);
+      } else {
+        menory.push(item);
+      }
+    });*/
+
+  }
+
+  readOper(oper: OperatorType, x: number, y: number) {
+    switch (oper) {
+      case OperatorType.puls:
+        return x + y;
+      case OperatorType.minus:
+        return x - y;
+      case  OperatorType.multi:
+        return x * y;
+      case  OperatorType.divide:
+        return x / y;
+      case  OperatorType.mod:
+        return x % y;
+
+    }
   }
 
   getRandomInt(max) {
