@@ -3,6 +3,9 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { registerLocaleData } from '@angular/common';
+import ko from '@angular/common/locales/ko';
+registerLocaleData(ko);
 
 if (environment.production) {
   enableProdMode();
