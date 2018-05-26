@@ -1,7 +1,10 @@
-<ng-container *ngIf="true">
-  <div class=" h-100 d-flex flex-column justify-content-center align-content-center">
-<h1 class="formula-text"> <app-operator *ngFor="let value of formula" [value]="value"></app-operator></h1>
-<h1 class="result-text">{{result}}</h1>
+ <div class=" h-100 d-flex flex-column justify-content-start align-content-center">
+   <div class="count-down timer-text">
+     {{timer$ | async}}:{{milli$ | async}}
+   </div>
+    <h1 class="formula-text">
+      <app-operator *ngFor="let value of formula" [value]="value"></app-operator><span class="ml-1">&#61;</span>
+    </h1>
+    <h1  class="result-text"><span *ngIf="(timer$ | async) === 5" >{{result}}</span></h1>
   </div>
-</ng-container>
 

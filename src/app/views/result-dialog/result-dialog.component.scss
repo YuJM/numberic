@@ -2,10 +2,22 @@
   h1{
     text-align: center;
   }
+  .timer-text {
+    text-align: center;
+    font-family: 'Digital';
+    font-size: 150px;
+    font-weight: 300;
+    font-style: normal;
+  }
   .formula-text {
-    font-size: 40px;
+    font-size: 100px;
+    line-height: 90px;
+    >*{
+      width: 50px;
+    }
   }
   .result-text {
-    font-size: 50px;
+    min-height: 90px;
+    font-size: 80px;
   }
 }

@@ -24,8 +24,7 @@ export class P1Component implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
-      console.log('U+0002B U+0002B &#43;');
-    this.addMatItem$
+      this.addMatItem$
         .pipe(
           scan<IMathItem, MathMeta>((acc, c) => {
             const result = acc.result;
@@ -85,7 +84,7 @@ export class P1Component implements OnInit {
     // });
     this.addMatItem$.next({
       type: MathType.Number,
-      value: this.getRandomInt(9)
+      value: this.getRandomInt(8) + 1
     });
   }
 
