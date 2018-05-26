@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { Subject } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {Subject} from 'rxjs';
 import {filter, scan, share} from 'rxjs/operators';
 import {MathType, OperatorValue, OperatorType} from '../../numberic.enum';
-import { IMathItem, MathMeta } from '../../numberic.interface';
+import {IMathItem, MathMeta} from '../../numberic.interface';
 import * as mathjs from 'mathjs';
 import {ResultDialogComponent} from '../result-dialog/result-dialog.component';
 
@@ -21,49 +21,50 @@ export class P1Component implements OnInit {
   mathType = MathType;
   addMatItem$ = new Subject<IMathItem>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+  }
 
   ngOnInit() {
-      this.addMatItem$
-        .pipe(
-          scan<IMathItem, MathMeta>((acc, c) => {
-            const result = acc.result;
-            const beforeIndex = result.length - 1;
+    this.addMatItem$
+      .pipe(
+        scan<IMathItem, MathMeta>((acc, c) => {
+          const result = acc.result;
+          const beforeIndex = result.length - 1;
 
-            if (c.type === MathType.Init) {
-              return {
-                priorityIndex: [],
-                matrix: [],
-                result: []
-              };
-            } else if (c.type === MathType.Operator) {
-              if (c.value <= OperatorType.mod) {
-                acc.priorityIndex.push(result.length);
-                acc.matrix[beforeIndex]++;
-                // acc.matrix.push(1);
-              }
-              acc.matrix.push(0);
-
-            } else if (c.type === MathType.Number) {
-              if (result.length && result[beforeIndex].type === MathType.Number) {
-                result[beforeIndex].value = parseInt(`${result[beforeIndex].value}${c.value}`, 10);
-                return acc;
-              }
-              acc.matrix.push(acc.matrix[beforeIndex - 1] || 0);
+          if (c.type === MathType.Init) {
+            return {
+              priorityIndex: [],
+              matrix: [],
+              result: []
+            };
+          } else if (c.type === MathType.Operator) {
+            if (c.value <= OperatorType.mod) {
+              acc.priorityIndex.push(result.length);
+              acc.matrix[beforeIndex]++;
+              // acc.matrix.push(1);
             }
-            result.push(c);
-            acc.result = result;
-            return acc;
-          }, {
-            priorityIndex: [],
-            matrix: [],
-            result: []
-          }),
-          share()
-        )
-        .subscribe(data => {
-          this.math = data;
-        });
+            acc.matrix.push(0);
+
+          } else if (c.type === MathType.Number) {
+            if (result.length && result[beforeIndex].type === MathType.Number) {
+              result[beforeIndex].value = parseInt(`${result[beforeIndex].value}${c.value}`, 10);
+              return acc;
+            }
+            acc.matrix.push(acc.matrix[beforeIndex - 1] || 0);
+          }
+          result.push(c);
+          acc.result = result;
+          return acc;
+        }, {
+          priorityIndex: [],
+          matrix: [],
+          result: []
+        }),
+        share()
+      )
+      .subscribe(data => {
+        this.math = data;
+      });
   }
 
   addOperator(addOk?: boolean) {
@@ -73,7 +74,7 @@ export class P1Component implements OnInit {
     // });
     this.addMatItem$.next({
       type: MathType.Operator,
-      value: OperatorValue[this.getRandomInt(9) % 4]
+      value: OperatorValue[this.getRandomInt(8) % 4]
     });
   }
 
@@ -99,7 +100,7 @@ export class P1Component implements OnInit {
   onCheckDialog() {
     const formulaArray = this.math.result.map(i => i.value);
     const mathStr = formulaArray.join('');
-    const result =  mathjs.eval(mathStr);
+    const result = mathjs.eval(mathStr);
 
 
     const ref = this.dialog.open(ResultDialogComponent, {
@@ -108,10 +109,9 @@ export class P1Component implements OnInit {
       data: {result, formulaArray}
     });
     ref.afterClosed()
-       .pipe(filter(x => !!x))
-       .subscribe((data) => {
-         console.log('닫을 때 데이터', data);
-       });
+      .subscribe((data) => {
+        this.addMatItem$.next({type: MathType.Init});
+      });
 
   }
 

@@ -1,11 +1,11 @@
-<div class="container-fluid p-5">
+<div class="container-fluid p-5 h-100 d-flex flex-column justify-content-around">
   <h1 class="text-secondary text-center m-2 mat-board"><span class="math-item-card" *ngFor="let item of math.result"
-                                                             [ngClass]="{'operator': item.type === mathType.Operator, 'number': item.type === mathType.Number}"> {{item.value}}</span>
+                                                             [ngClass]="{'operator': item.type === mathType.Operator, 'number': item.type === mathType.Number}"></span>
   </h1>
   <div class="row d-flex">
-    <mat-card class="col-6 text-center hover text-primary p-5" (click)="addNumber()"><h2>숫자</h2></mat-card>
-    <mat-card class="col-6  text-center hover text-success p-5" *ngIf="(addMatItem$|async)?.type
-      === mathType.Number" (click)="addOperator()"><h2>연산자</h2></mat-card>
+    <mat-card class="col-6 text-center hover text-primary p-5 font-weight-bold" (click)="addNumber()"><h2>(1~9)숫자</h2></mat-card>
+    <mat-card class="col-6  text-center hover text-success p-5 font-weight-bold" *ngIf="(addMatItem$|async)?.type
+      === mathType.Number" (click)="addOperator()"><h2>(&#43;,&#8722;,&#215;,&#247;)연산자</h2></mat-card>
   </div>
 
   <div class="d-flex justify-content-between m-5">

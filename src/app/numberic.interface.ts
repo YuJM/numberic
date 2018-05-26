@@ -2,7 +2,7 @@ import { MathType } from './numberic.enum';
 
 export interface IMathItem {
   type: MathType;
-  value: any;
+  value?: any;
 }
 
 export interface MathMeta {
