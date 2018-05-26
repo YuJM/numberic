@@ -1,0 +1,12 @@
+<!--/*-->
+<!--'+' = '&#43;',-->
+<!--'-' = '&#8722;',-->
+<!--'*' = '&#215;',-->
+<!--'/' = '&#247;'*/-->
+<ng-container [ngSwitch]="value">
+  <span *ngSwitchCase="'+'">&#43;</span>
+  <span *ngSwitchCase="'-'">&#8722;</span>
+  <span *ngSwitchCase="'*'">&#215;</span>
+  <span *ngSwitchCase="'/'">&#247;</span>
+  <span *ngSwitchDefault>{{value}}</span>
+<ng-container>

@@ -12,3 +12,16 @@ export enum OperatorType {
   minus
 }
 
+export enum OperatorValue {
+  '+' = 0,
+  '-' = 1,
+  '/' = 2,
+  '*' = 3
+}
+
+export enum opToCode  {
+  '+' = '&#43;',
+  '-' = '&#8722;',
+  '*' = '&#215;',
+  '/' = '&#247;'
+}

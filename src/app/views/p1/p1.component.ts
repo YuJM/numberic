@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
-import { scan, share } from 'rxjs/operators';
-import { MathType, OperatorType } from '../../numberic.enum';
+import {filter, scan, share} from 'rxjs/operators';
+import {MathType, OperatorValue, OperatorType} from '../../numberic.enum';
 import { IMathItem, MathMeta } from '../../numberic.interface';
+import * as mathjs from 'mathjs';
+import {ResultDialogComponent} from '../result-dialog/result-dialog.component';
 
 @Component({
   selector: 'app-p1',
@@ -22,7 +24,7 @@ export class P1Component implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
-
+      console.log('U+0002B U+0002B &#43;');
     this.addMatItem$
         .pipe(
           scan<IMathItem, MathMeta>((acc, c) => {
@@ -72,7 +74,7 @@ export class P1Component implements OnInit {
     // });
     this.addMatItem$.next({
       type: MathType.Operator,
-      value: this.getRandomInt(9) % 5
+      value: OperatorValue[this.getRandomInt(9) % 4]
     });
   }
 
@@ -96,30 +98,26 @@ export class P1Component implements OnInit {
   }
 
   onCheckDialog() {
-    console.log('결과 ', this.math);
-    // const ref = this.dialog.open(ResultDialogComponent, {
-    //   width: '90%',
-    //   height: '80%',
-    //   data: {mathArray: this.math}
-    // });
-    // ref.afterClosed()
-    //    .pipe(filter(x => !!x))
-    //    .subscribe((data) => {
-    //      console.log('닫을 때 데이터', data);
-    //    });
+    const formulaArray = this.math.result.map(i => i.value);
+    const mathStr = formulaArray.join('');
+    const result =  mathjs.eval(mathStr);
+
+
+    const ref = this.dialog.open(ResultDialogComponent, {
+      width: '90%',
+      height: '80%',
+      data: {result, formulaArray}
+    });
+    ref.afterClosed()
+       .pipe(filter(x => !!x))
+       .subscribe((data) => {
+         console.log('닫을 때 데이터', data);
+       });
+
   }
 
   calc(mathMeta: MathMeta) {
     const fomula = mathMeta.result;
-    const bag = [];
-
-/*    fomula.forEach((item) => {
-      if (item.type === MathType.Number) {
-        bag.push(item);
-      } else {
-        menory.push(item);
-      }
-    });*/
 
   }
 

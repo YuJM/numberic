@@ -12,6 +12,7 @@ import { StartViewComponent } from './views/start-view/start-view.component';
 import { ListToStrPipe } from './list-to-str.pipe';
 import { LastItemPipe } from './last-item.pipe';
 import { ResultDialogComponent } from './views/result-dialog/result-dialog.component';
+import { OperatorComponent } from './operator/operator.component';
 
 const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialogModule, MatTooltipModule];
 
@@ -22,7 +23,8 @@ const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialog
     P1Component,
     ListToStrPipe,
     LastItemPipe,
-    ResultDialogComponent
+    ResultDialogComponent,
+    OperatorComponent
   ],
   imports: [
     BrowserAnimationsModule,
