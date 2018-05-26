@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Subject} from 'rxjs';
-import {filter, scan, share} from 'rxjs/operators';
-import {MathType, OperatorValue, OperatorType} from '../../numberic.enum';
+import {scan, share} from 'rxjs/operators';
+import {MathType, OperatorType, OperatorValue} from '../../numberic.enum';
 import {IMathItem, MathMeta} from '../../numberic.interface';
 import * as mathjs from 'mathjs';
 import {ResultDialogComponent} from '../result-dialog/result-dialog.component';

@@ -11,6 +11,7 @@ import {NumbericService} from '../../numberic.service';
 })
 export class ResultDialogComponent implements OnInit {
   result;
+  resultRound;
   formula: string[];
   timer$ = interval(1000).pipe(take(this.nService.countStandard), map(i => (i + 1), share()));
   milli$ = interval(100).pipe(take(this.nService.countStandard * 10), map(i => (i + 1) % 10), share());
@@ -20,7 +21,8 @@ export class ResultDialogComponent implements OnInit {
 
   ngOnInit() {
 
-    this.result = parseInt(this.data.result, 10);
+    this.result = this.data.result.toFixed(1);
+    this.resultRound = Math.round(this.result);
     this.formula = this.data.formulaArray;
   }
 
