@@ -1,21 +1,31 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatTooltipModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatIconModule,
+  MatInputModule,
+  MatSidenavModule, MatSliderModule, MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { routes } from './routes';
-import { P1Component } from './views/p1/p1.component';
-import { StartViewComponent } from './views/start-view/start-view.component';
+import {AppComponent} from './app.component';
+import {routes} from './routes';
+import {P1Component} from './views/p1/p1.component';
+import {StartViewComponent} from './views/start-view/start-view.component';
 
-import { ListToStrPipe } from './list-to-str.pipe';
-import { LastItemPipe } from './last-item.pipe';
-import { ResultDialogComponent } from './views/result-dialog/result-dialog.component';
-import { OperatorComponent } from './operator/operator.component';
+import {ListToStrPipe} from './list-to-str.pipe';
+import {LastItemPipe} from './last-item.pipe';
+import {ResultDialogComponent} from './views/result-dialog/result-dialog.component';
+import {OperatorComponent} from './operator/operator.component';
 import {NumbericService} from './numberic.service';
 
-const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialogModule, MatTooltipModule];
+const materialModules = [MatCardModule, MatIconModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatSidenavModule,
+  MatInputModule,
+  MatToolbarModule, MatSliderModule];
 
 @NgModule({
   declarations: [
@@ -31,7 +41,8 @@ const materialModule = [MatCardModule, MatIconModule, MatButtonModule, MatDialog
     BrowserAnimationsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    materialModule
+    materialModules,
+    FormsModule
   ],
   providers: [NumbericService],
   bootstrap: [AppComponent],

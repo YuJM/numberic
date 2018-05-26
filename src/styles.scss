@@ -53,3 +53,7 @@ html, body {
     @extend .bg-primary;
   }
 }
+
+.sidebar {
+  min-width: 242px;
+}

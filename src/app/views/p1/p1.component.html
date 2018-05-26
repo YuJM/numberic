@@ -1,3 +1,10 @@
+<mat-sidenav-container class="h-100">
+  <mat-sidenav [mode]="'over'" #sidenav  class="sidebar"><mat-toolbar><span>Numberic</span></mat-toolbar>
+    <div class="container mt-3">
+      <p class="text-left">초설정</p>
+      <mat-slider class="w-100" [max]="10" [step]="1" [thumbLabel]="true" [tickInterval]="1" [(ngModel)]="numberService.countStandard"></mat-slider></div>
+  </mat-sidenav>
+<mat-sidenav-content  class="bg-white">
 <div class="container-fluid p-5 h-100 d-flex flex-column justify-content-around">
   <h1 class="text-center m-2 mat-board"><span class="math-item-card" *ngFor="let item of math.result"
                                                              [ngClass]="{'operator': item.type === mathType.Operator, 'number': item.type === mathType.Number}"></span>
@@ -17,4 +24,9 @@
       === mathType.Operator" (click)="onCheckDialog()">&#61;
     </button>
   </div>
+  <div class="row">
+    <button mat-button (click)="sidenav.toggle()">설정</button>
+  </div>
 </div>
+</mat-sidenav-content>
+</mat-sidenav-container>

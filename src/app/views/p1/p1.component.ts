@@ -6,6 +6,7 @@ import {MathType, OperatorType, OperatorValue} from '../../numberic.enum';
 import {IMathItem, MathMeta} from '../../numberic.interface';
 import * as mathjs from 'mathjs';
 import {ResultDialogComponent} from '../result-dialog/result-dialog.component';
+import {NumbericService} from '../../numberic.service';
 
 @Component({
   selector: 'app-p1',
@@ -21,7 +22,7 @@ export class P1Component implements OnInit {
   mathType = MathType;
   addMatItem$ = new Subject<IMathItem>();
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, public numberService: NumbericService) {
   }
 
   ngOnInit() {
