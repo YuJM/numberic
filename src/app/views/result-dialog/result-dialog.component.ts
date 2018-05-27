@@ -15,8 +15,9 @@ export class ResultDialogComponent implements OnInit {
   formula: string[];
   timer$ = interval(1000).pipe(take(this.nService.countStandard), map(i => (i + 1), share()));
   milli$ = interval(100).pipe(take(this.nService.countStandard * 10), map(i => (i + 1) % 10), share());
-
+  countStandard;
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, private nService: NumbericService) {
+    this.countStandard = this.nService.countStandard;
   }
 
   ngOnInit() {
